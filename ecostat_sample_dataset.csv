@@ -1,0 +1,23 @@
+community_name,location,population,energy_usage,pollution_level,recycling_rate,tree_coverage,rainwater_harvesting
+Bennett_University,Greater Noida,9586,114565,156,55,3566,True
+Community_1,Bangalore,3971,36504.12,207,77.62,9493.56,1
+Community_2,Delhi,2808,28564.91,185,66.67,3606.19,0
+Community_3,Delhi,9362,8208.01,136,82.94,4323.57,1
+Community_4,Bangalore,6655,13305.23,285,31.82,6627.53,0
+Community_5,Chennai,3308,6029.29,169,27.87,8817.74,0
+Community_6,Delhi,526,9599.38,145,48.11,6177.86,1
+Community_7,Kolkata,2187,36907.11,87,16.81,1356.92,0
+Community_8,Chennai,2880,27906.16,127,80.14,1952.33,1
+Community_9,Bangalore,4433,30436.02,221,12.23,3438.96,0
+Community_10,Chennai,7852,13560.57,260,83.57,3783.1,1
+Community_11,Chennai,9972,19063.43,185,52.58,5194.16,0
+Community_12,Mumbai,272,6334.89,176,52.69,4360.2,1
+Community_13,Chennai,7344,12156.41,266,83.72,2723.38,1
+Community_14,Kolkata,7703,7119.63,159,22.94,6030.61,0
+Community_15,Mumbai,1406,42328.62,185,69.52,617.17,0
+Community_16,Chennai,5625,19218.92,132,33.08,1214.29,0
+Community_17,Chennai,1997,40654.68,287,88.5,4545.12,0
+Community_18,Kolkata,1596,43241.38,55,63.95,4885.53,1
+Community_19,Kolkata,8572,24148.23,125,21.87,2035.83,0
+Community_20,Chennai,9507,17901.8,146,51.47,3432.69,1
+Bennett_University,Greater_Noida,9706,112901.22,152,74.22,3203,1

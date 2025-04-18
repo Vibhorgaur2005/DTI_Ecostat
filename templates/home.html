@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoStat - Sustainability Ratings</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <style>
+        body {
+            background: url("{% static 'images/background.jpg' %}") no-repeat center center/cover;
+        }
+        .hero {
+            background: url("{% static 'images/hero-bg.jpg' %}") no-repeat center center/cover;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <h1>EcoStat</h1>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h2>Analyze Your Community's Sustainability</h2>
+            <p>EcoStat provides AI-powered sustainability ratings based on key environmental factors.</p>
+            <a href="{% url 'login' %}" class="btn btn-success">Get Started</a>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 EcoStat. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

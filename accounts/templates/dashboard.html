@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoStat Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <style>
+        body {
+            background: url("{% static 'images/dashboard-bg.jpg' %}") no-repeat center center/cover;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            background: #14532d;
+            padding: 30px 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: #d1fae5;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px;
+            display: block;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #1e4e35;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            padding: 40px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar h1 {
+            font-size: 28px;
+            color: #14532d;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e6f4ea;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Score Section */
+        .score-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .score-container h2 {
+            font-size: 22px;
+            color: #166534;
+        }
+
+        .score-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #064e3b;
+            margin: 10px 0;
+        }
+
+        .meter {
+            width: 60%;
+            height: 20px;
+            background: #d1fae5;
+            border-radius: 12px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .meter span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(to right, #34d399, #10b981);
+            border-radius: 12px;
+            transition: width 0.6s ease-in-out;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>EcoStat</h2>
+        <ul>
+            <li><a href="{% url 'dashboard' %}">🏠 Home</a></li>
+            <li><a href="{% url 'sustainability_score' %}">🌿 Sustainability Calculator</a></li>
+            <li><a href="{% url 'profile' %}">👤 Profile</a></li>
+            <li><a href="{% url 'community_insights' %}">🌍 Community Insights</a></li>
+            <li><a href="{% url 'logout' %}">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Welcome, {{ request.user.username }}</h1>
+            <div class="profile">
+                <img src="{% static 'images/user-profile.png' %}" alt="User Profile">
+                <span>{{ request.user.username }}</span>
+            </div>
+        </div>
+
+        <!-- Sustainability Score -->
+        <div class="score-container">
+            <h2>Your Sustainability Score</h2>
+            <p class="score-number" id="score-text">Loading...</p>
+            <div class="meter">
+                <span id="meter-fill"></span>
+            </div>
+        </div>
+
+        <!-- Dashboard Sections -->
+        <div class="dashboard-sections">
+            <div class="card">
+                <h3>⚡ Energy Usage</h3>
+                <p>Electricity consumption in kWh</p>
+            </div>
+            <div class="card">
+                <h3>🌫 Pollution Levels</h3>
+                <p>AQI index</p>
+            </div>
+            <div class="card">
+                <h3>♻️ Recycling & Waste</h3>
+                <p>Recyling rate %</p>
+            </div>
+            <div class="card">
+                <h3>🌳 Green Cover</h3>
+                <p>Tree Count</p>
+            </div>
+            <div class="card">
+                <h3>💧 Water Conservation</h3>
+                <p>Rainwater Harvesting</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sustainability Score Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("{% url 'sustainability_score' %}")
+                .then(response => {
+                    if (!response.ok) throw new Error("Network error");
+                    return response.json();
+                })
+                .then(data => {
+                    const score = data.score;
+                    document.getElementById("score-text").textContent = `Score: ${score}/10`;
+                    document.getElementById("meter-fill").style.width = (score * 10) + "%";
+                })
+                .catch(error => {
+                    console.error("Score load error:", error);
+                    document.getElementById("score-text").textContent = "Error loading score";
+                });
+        });
+    </script>
+</body>
+</html>

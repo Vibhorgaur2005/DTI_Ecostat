@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Insights</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background: url("{% static 'images/background.jpg' %}");
+            background-size: cover;
+            color: #333;
+        }
+
+        .title-box {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: rgba(0, 0, 0, 0.6); /* Transparent black box */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 40px auto 30px;
+        }
+
+        .title-box h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.85); /* Light white background */
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2d6a4f; /* Green */
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background-color: #e9f7e2; /* Light green hover */
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 15px;
+            }
+
+            td {
+                padding-left: 50%;
+                position: relative;
+                text-align: left;
+            }
+
+            td::before {
+                position: absolute;
+                left: 15px;
+                top: 12px;
+                white-space: nowrap;
+                font-weight: bold;
+                content: attr(data-label);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-box">
+        <h1>Community Insights</h1>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Community Name</th>
+                <th>Location</th>
+                <th>Energy Usage</th>
+                <th>Pollution Level</th>
+                <th>Recycling Rate (%)</th>
+                <th>Green Cover</th>
+                <th>Water Conservation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for community in communities %}
+                <tr>
+                    <td data-label="Community Name">{{ community.community_name }}</td>
+                    <td data-label="Location">{{ community.location }}</td>
+                    <td data-label="Energy Usage">{{ community.energy_usage }}</td>
+                    <td data-label="Pollution Level">{{ community.pollution_level }}</td>
+                    <td data-label="Recycling Rate">{{ community.recycling_rate }}</td>
+                    <td data-label="Green Cover">{{ community.tree_coverage }}</td>
+                    <td data-label="Water Conservation">{{ community.rainwater_harvesting }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

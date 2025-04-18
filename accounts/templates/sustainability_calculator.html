@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Selection</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: url("{% static 'images/background.jpg' %}");
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #1b4332;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      padding: 30px 0 10px;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 3px #000;
+      position: relative;
+    }
+
+    h1::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: #1b4332;
+      margin-top: 20px;
+      font-size: 1.5em;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 25px 30px;
+      background-color: rgba(255, 255, 255, 0.92);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    label {
+      font-size: 1.05em;
+      color: #2d6a4f;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: #2d6a4f;
+    }
+
+    button {
+      background-color: #2d6a4f;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #1b4e32;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .select-community {
+      background-color: #f0f8f1;
+      border: 1px solid #2d6a4f;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+        padding: 20px 0 10px;
+      }
+
+      .form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Select a Community or Enter Data Manually</h1>
+
+  <div class="form-container">
+    <div class="form-group">
+      <label for="community">Select Community:</label>
+      <select name="community" id="community" class="select-community" onchange="redirectToInsights(this)">
+        <option value="">-- Select a Community --</option>
+        {% for community in communities %}
+          <option value="{% url 'community_insights_detail' community=community %}">{{ community }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <script>
+      function redirectToInsights(select) {
+        const url = select.value;
+        if (url) {
+          window.location.href = url;
+        }
+      }
+    </script>
+
+    <hr style="margin: 30px 0; border: none; border-top: 1px solid #ccc;">
+
+    <form method="post">
+      {% csrf_token %}
+
+      <h2>OR Manually Enter Data:</h2>
+
+      <div class="form-group">
+        <label for="energy_usage">Energy Usage (in kWh) :</label>
+        <input type="number" name="energy_usage" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="pollution_level">Pollution Level (AQI) :</label>
+        <input type="number" name="pollution_level" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="recycling_rate">Recycling Rate (%) :</label>
+        <input type="number" name="recycling_rate" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="green_cover">Green Cover (Tree Count) :</label>
+        <input type="number" name="green_cover" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="water_conservation">Water Conservation (Rainwater Harvesting):</label>
+        <input type="number" name="water_conservation" step="0.01">
+      </div>
+
+      <button type="submit">Calculate Score</button>
+    </form>
+  </div>
+
+</body>
+</html>
