@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-dt_*3=2-gtzr+x_235rao+dy$le3g5dxa39_r%45p2l&ztgip$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'dti-ecostat-3.onrender.com']
 
 
 # Application definition
