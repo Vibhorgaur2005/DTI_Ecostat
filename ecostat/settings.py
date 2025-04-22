@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "dti-ecostat-7.onrender.com",  # ✅ Add this
+    "dti-ecostat-8.onrender.com",  # ✅ Add this
 ]
 
 # Application definition
