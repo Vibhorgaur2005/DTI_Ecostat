@@ -17,4 +17,5 @@ urlpatterns = [
     path('sustainability_calculator/', views.sustainability_calculator, name='sustainability_calculator'),
     path('community-insights/', views.community_insights_all, name='community_insights_all'),
     path('community-insights/<str:community>/', views.community_insights_detail, name='community_insights_detail'),
+    path('calculate/', views.sustainability_calculator, name='sustainability_calculator'),
     ]

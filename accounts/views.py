@@ -13,6 +13,22 @@ import pickle
 import os
 from django.conf import settings
 import pandas as pd
+import numpy as np
+from tensorflow.keras.models import load_model
+import joblib
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import SustainabilityScore  
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+# Get the full path to the accounts directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = settings.BASE_DIR 
+
+# # Load the model and scaler using correct paths
+# model = load_model(os.path.join(BASE_DIR, "sustainability_model.h5"))
+# scaler = joblib.load(os.path.join(BASE_DIR, "scaler.pkl"))
 
 # Load your dataset
 dataset = pd.read_csv('ecostat_sample_dataset.csv')
@@ -123,8 +139,104 @@ def community_insights(request):
 
 from django.shortcuts import render
 
+# def sustainability_calculator(request):
+#     return render(request, 'sustainability_calculator.html')
+
+# def sustainability_calculator(request):
+#     prediction = None 
+#     if request.method == "POST":
+#         try:
+#             energy_usage = float(request.POST.get('energy_usage'))
+#             pollution_level = float(request.POST.get('pollution_level'))
+#             recycling_rate = float(request.POST.get('recycling_rate'))
+#             green_cover = float(request.POST.get('green_cover'))
+#             rainwater_harvesting = int(request.POST.get('rainwater_harvesting'))  # 0 or 1
+
+#             #input_data = np.array([[energy_usage, pollution_level, recycling_rate, green_cover, rainwater_harvesting]])
+#             input_data = np.array([[3500, 70, 7000, 3000, 4000]])
+
+#             # Load trained RandomForest model (.pkl)
+#             model = joblib.load(os.path.join(BASE_DIR, "sustainability_model.pkl"))
+
+#             score = model.predict(input_data)[0]
+#             prediction = round(score, 2)
+#             SustainabilityScore.objects.create(score=prediction)
+
+#         except ValueError:
+#             messages.error(request, "Invalid input. Please make sure all fields contain valid numbers.")
+#             return render(request, 'sustainability_calculator.html')
+
+#     return render(request, 'sustainability_calculator.html', {'prediction': prediction})
+
+
+# def sustainability_calculator(request):
+#     print(request.method)
+#     if request.method == "POST":
+#         try:
+#             energy_usage = float(request.POST.get('energy_usage'))
+#             pollution_level = float(request.POST.get('pollution_level'))
+#             recycling_rate = float(request.POST.get('recycling_rate'))
+#             green_cover = float(request.POST.get('green_cover'))
+#             water_conservation = int(request.POST.get('water_conservation'))
+
+#             print("Input values:", energy_usage, pollution_level, recycling_rate, green_cover, water_conservation)
+
+#             input_data = np.array([[energy_usage, pollution_level, recycling_rate, green_cover, water_conservation]])
+
+#             # Optional: Load and apply scaler if used
+#             # scaler_path = os.path.join(BASE_DIR, 'accounts', 'ml_model', 'scaler.pkl')
+#             # scaler = joblib.load(scaler_path)
+#             # input_data = scaler.transform(input_data)
+
+#             model_path = os.path.join(BASE_DIR, 'ml_model', 'sustainability_model.pkl')
+#             model = joblib.load(model_path)
+
+#             score = model.predict(input_data)[0]
+#             prediction = round(score, 2)
+
+#             print("Predicted score:", prediction)
+
+#             # Save to DB
+#             SustainabilityScore.objects.create(score=prediction)
+
+#             return JsonResponse({
+#                 'success': True,
+#                 'sustainability_score': prediction
+#             })
+
+#         except Exception as e:
+#             return JsonResponse({'success': False, 'error': str(e)})
+
+#     return JsonResponse({'success': False, 'error': 'Only POST method allowed'})
+
+@csrf_exempt
 def sustainability_calculator(request):
-    return render(request, 'sustainability_calculator.html')
+    if request.method == "POST":
+        try:
+            energy_usage = float(request.POST.get('energy_usage'))
+            pollution_level = float(request.POST.get('pollution_level'))
+            recycling_rate = float(request.POST.get('recycling_rate'))
+            green_cover = float(request.POST.get('green_cover'))
+            water_conservation = float(request.POST.get('water_conservation'))
+
+            input_data = np.array([[energy_usage, pollution_level, recycling_rate, green_cover, water_conservation]])
+
+            model_path = os.path.join(BASE_DIR, 'accounts', 'ml_model', 'sustainability_model.pkl')
+            model = joblib.load(model_path)
+
+            score = model.predict(input_data)[0]
+            prediction = round(score, 2)
+
+            SustainabilityScore.objects.create(score=prediction)
+
+            return JsonResponse({'success': True, 'prediction': prediction})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Only POST method allowed'})
+
+
 def community_insights_all(request):
     communities = Community.objects.all()
     return render(request, 'community_insights.html', {'communities': communities})

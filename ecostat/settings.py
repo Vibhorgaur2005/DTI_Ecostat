@@ -136,3 +136,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ecostat005@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'hyyvyepsjbwlomad'  # Use an App Password, not your actual password
 LOGOUT_REDIRECT_URL = '/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -1,4 +1,4 @@
-community_name,location,population,energy_usage,pollution_level,recycling_rate,tree_coverage,rainwater_harvesting
+community_name,location,population,energy_usage,pollution_level,recycling_rate,green_cover,water_conservation
 Bennett_University,Greater Noida,9586,114565,156,55,3566,True
 Community_1,Bangalore,3971,36504.12,207,77.62,9493.56,1
 Community_2,Delhi,2808,28564.91,185,66.67,3606.19,0
